@@ -109,11 +109,11 @@ def get_rest(filename, sizeofsent):
 	    sent_combined = ""
 	    sent_list = []
 	    for j in range(sizeofsent):
-		sent = list_of_sents[i+j]
-	        sent = sent.strip()
-	        sent_combined += sent
-		sent_list.append(sent.split(' '))
-		total += len(sent_list)
+                sent = list_of_sents[i+j]
+                sent = sent.strip()
+                sent_combined += sent
+                sent_list.append(sent.split(' '))
+                total += len(sent_list)
 	    num += 1
 	    print('list_of_sents[i]: ', list_of_sents[i])
 	    print('sent_combined: ', sent_combined)
