@@ -542,8 +542,8 @@ def parse_args():
 	'''Parse command line arguments.'''
 	parser = argparse.ArgumentParser()
 
-  # new parameters
-  parser.add_argument("--sizeofsent", default=1, type=int)
+	# new parameters
+	parser.add_argument("--sizeofsent", default=1, type=int)
   
 	## Required parameters
 	parser.add_argument("--data_dir",
