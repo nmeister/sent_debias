@@ -334,7 +334,7 @@ def get_def_pairs(def_pairs_name):
 		bucket = buckets[num_domains-1]
 		return bucket
 	# single-domain
-	elif (def_pairs_name in ["news", "reddit", "sst", "pom", "wikitext"]):
+	elif (def_pairs_name in ["news_200", "reddit", "sst", "pom", "wikitext"]):
 		return get_single_domain(def_pairs_name)
 	else:
 		raise Exception("invalid defining pairs name")
