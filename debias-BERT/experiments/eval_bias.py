@@ -164,7 +164,7 @@ def evaluate(args, def_pairs, word_level=False):
 	specific_set = set(gender_specific_words)
 
 	abs_esizes = []
-	for test_id in ['6', '6b', '7', '7b', '8', '8b']:
+	for test_id in ['6', '6edited', '6b', '7', '7b', '8', '8b']:
 		filename = "sent-weat{}.jsonl".format(test_id)
 		sent_file = os.path.join(DATA_DIR, filename)
 		data = load_json(sent_file)
@@ -285,6 +285,12 @@ class WordEvaluator(object):
 		for i in [6, 7, 8]:
 			self.word_filenames.append("weat{}.jsonl".format(i))
 			self.word_filenames.append("weat{}b.jsonl".format(i))
+		
+		####################################################################
+		# defining filenames for evaluation on the edited jsonl file we made
+		self.filenames.append("sent-weat6edited.jsonl")
+		self.word_filenames.append("sent-weat6edited.jsonl")
+		####################################################################
 
 		self.vocab = self.init_vocab() # 190 words
 		self.expand_specific_vocab()
