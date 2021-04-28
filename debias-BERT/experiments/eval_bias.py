@@ -166,6 +166,7 @@ def evaluate(args, def_pairs, word_level=False):
 	abs_esizes = []
 	for test_id in ['6', '6edited', '6b', '7', '7b', '8', '8b']:
 		filename = "sent-weat{}.jsonl".format(test_id)
+		print(filename)
 		sent_file = os.path.join(DATA_DIR, filename)
 		data = load_json(sent_file)
 
