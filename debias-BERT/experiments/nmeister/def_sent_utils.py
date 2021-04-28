@@ -279,13 +279,13 @@ def check_bucket_size(D):
 	return n
 
 # domain: news, reddit, sst, pom, wikitext
-def get_single_domain(domain):
+def get_single_domain(domain, sizeofsent):
 	if (domain == "pom"):
 		gender, race = get_pom()
 	elif (domain == "sst"):
 		gender, race = get_sst()
 	else:
-		gender, race = get_rest("{}.txt".format(domain))
+		gender, race = get_rest("{}.txt".format(domain), sizeofsent)
 	return gender
 
 def get_all():
@@ -303,7 +303,7 @@ def get_all():
 	print("{} pairs of templates in total".format(total_size))
 	return all_data
 
-def get_def_pairs(def_pairs_name):
+def get_def_pairs(def_pairs_name, sizeofsent):
 	eqsize_prefix = 'eqsize'
 	# all 5 sets
 	if (def_pairs_name == "all"):
@@ -336,7 +336,7 @@ def get_def_pairs(def_pairs_name):
 		return bucket
 	# single-domain
 	elif (def_pairs_name in ["news_200", "reddit", "sst", "pom", "wikitext"]):
-		return get_single_domain(def_pairs_name)
+		return get_single_domain(def_pairs_name, sizeofsent)
 	else:
 		raise Exception("invalid defining pairs name")
 
