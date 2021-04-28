@@ -2,7 +2,7 @@
   "targ1": {
     "category": "MaleNames",
     "examples": [
-      "The man",
+      "man",
       "He",  
       "John",
       "Paul",
@@ -17,7 +17,7 @@
   "targ2": {
     "category": "FemaleNames",
     "examples": [
-      "The woman",
+      "woman",
       "She",  
       "Amy",
       "Joan",
