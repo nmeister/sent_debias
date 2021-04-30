@@ -760,7 +760,7 @@ def prepare_model_and_pretrained_bias(args, device, num_labels, cache_dir):
 	gender_dir_pretrained = None
 	if (args.debias):
 		bert_encoder_pretrained = BertEncoder(model_pretrained, device)
-		def_pairs = get_def_pairs(args.def_pairs_name)
+		def_pairs = get_def_pairs(args.def_pairs_name, args.size_of_sent)
 		gender_dir_pretrained = compute_gender_dir(device, tokenizer, bert_encoder_pretrained, 
 			def_pairs, args.max_seq_length, k=args.num_dimension, load=True, task='pretrained')
 		gender_dir_pretrained = torch.tensor(gender_dir_pretrained, dtype=torch.float, device=device)
