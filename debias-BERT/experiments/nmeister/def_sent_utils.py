@@ -85,10 +85,18 @@ def get_pom():
 		if file.endswith(".txt"):
 			f = open(os.path.join(pom_loc, file), 'r')
 			data = f.read()
-			for sent in data.lower().split('.'):
-				sent = sent.strip()
-				sent_list = sent.split(' ')
-
+			list_of_sents = data.lower().split('.')
+			for i, sent in enumerate(list_of_sents):
+				sent_combined = ""
+	    			sent_list = []
+				for j in range(sizeofsent):
+					sent = list_of_sents[i+j]
+					sent = sent.strip()
+					sent_combined += sent
+					sent_list.append(sent.split(' '))
+				print('list_of_sents[i]: ', list_of_sents[i])
+	   		 	print('sent_combined: ', sent_combined)
+	    			print('sent_list: ', sent_list)
 				total += len(sent_list)
 				num += 1
 				all_pairs2 = template2(words2, sent, sent_list, all_pairs2)
@@ -113,16 +121,11 @@ def get_rest(filename, sizeofsent):
                 sent = sent.strip()
                 sent_combined += sent
                 sent_list.append(sent.split(' '))
-                total += len(sent_list)
+            total += len(sent_list)
 	    num += 1
-	    print('list_of_sents[i]: ', list_of_sents[i])
-	    print('sent_combined: ', sent_combined)
-	    print('sent_list: ', sent_list)
 	    all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
 	    all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
-	    print('all_pairs2: ', all_pairs2)
-	
-	print(filename, len(all_pairs2))
+
 	return all_pairs2, all_pairs3
 
 def get_sst():
@@ -130,7 +133,12 @@ def get_sst():
 	all_pairs3 = []
 	total = 0
 	num = 0
-	for sent in open(os.path.join(DIRECTORY,'sst.txt'), 'r'):
+	list_of_sents = open(os.path.join(DIRECTORY,'sst.txt'), 'r')
+	for i, sent in enumerate(list_of_sents):
+	    sent_combined = ""
+	    sent_list = []
+	    for j in range(sizeofsent):
+		sent = list_of_sents[i+j]
 		try:
 			num = int(sent.split('\t')[0])
 			sent = sent.split('\t')[1:]
@@ -138,11 +146,14 @@ def get_sst():
 		except:
 			pass
 		sent = sent.lower().strip()
-		sent_list = sent.split(' ')
-		total += len(sent_list)
-		num += 1
-		all_pairs2 = template2(words2, sent, sent_list, all_pairs2)
-		all_pairs3 = template3(words3, sent, sent_list, all_pairs3)
+		sent_list.append(sent.split(' '))
+	    total += len(sent_list)
+	    num += 1
+	    all_pairs2 = template2(words2, sent, sent_list, all_pairs2)
+	    all_pairs3 = template3(words3, sent, sent_list, all_pairs3)
+	    print('list_of_sents[i]: ', list_of_sents[i])
+	    print('sent_combined: ', sent_combined)
+	    print('sent_list: ', sent_list)
 	return all_pairs2, all_pairs3
 
 def get_more_domains():
@@ -281,19 +292,19 @@ def check_bucket_size(D):
 # domain: news, reddit, sst, pom, wikitext
 def get_single_domain(domain, sizeofsent):
 	if (domain == "pom"):
-		gender, race = get_pom()
+		gender, race = get_pom(sizeofsent)
 	elif (domain == "sst"):
-		gender, race = get_sst()
+		gender, race = get_sst(sizeofsent)
 	else:
 		gender, race = get_rest("{}.txt".format(domain), sizeofsent)
 	return gender
 
-def get_all():
+def get_all(sizeofsent):
 	domains = ["reddit", "sst", "wikitext", "pom", "meld", "news_200"] #, "yelp_review_10mb"] # "news_200"]
 	print("Get data from {}".format(domains))
 	all_data = defaultdict(lambda: defaultdict(list))
 	for domain in domains:
-		bucket = get_single_domain(domain)
+		bucket = get_single_domain(domain, sizeofsent)
 		bucket_size = check_bucket_size(bucket)
 		print("{} has {} pairs of templates".format(domain, bucket_size))
 		for i in bucket:
@@ -307,7 +318,7 @@ def get_def_pairs(def_pairs_name, sizeofsent):
 	eqsize_prefix = 'eqsize'
 	# all 5 sets
 	if (def_pairs_name == "all"):
-		return get_all()
+		return get_all(sizeofsent)
 	elif (def_pairs_name.startswith(eqsize_prefix)):
 		n_samples = int(def_pairs_name[len(eqsize_prefix):])
 		print("Select {} templates from each source.".format(n_samples))
