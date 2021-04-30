@@ -88,19 +88,19 @@ def get_pom():
 			list_of_sents = data.lower().split('.')
 			for i, sent in enumerate(list_of_sents):
 				sent_combined = ""
-	    			sent_list = []
+				sent_list = []
 				for j in range(sizeofsent):
 					sent = list_of_sents[i+j]
 					sent = sent.strip()
 					sent_combined += sent
 					sent_list.append(sent.split(' '))
 				print('list_of_sents[i]: ', list_of_sents[i])
-	   		 	print('sent_combined: ', sent_combined)
-	    			print('sent_list: ', sent_list)
+				print('sent_combined: ', sent_combined)
+				print('sent_list: ', sent_list)
 				total += len(sent_list)
 				num += 1
-				all_pairs2 = template2(words2, sent, sent_list, all_pairs2)
-				all_pairs3 = template3(words3, sent, sent_list, all_pairs3)
+				all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
+				all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
 	return all_pairs2, all_pairs3
 
 def get_rest(filename, sizeofsent):
@@ -117,11 +117,11 @@ def get_rest(filename, sizeofsent):
 	    sent_combined = ""
 	    sent_list = []
 	    for j in range(sizeofsent):
-                sent = list_of_sents[i+j]
-                sent = sent.strip()
-                sent_combined += sent
-                sent_list.append(sent.split(' '))
-            total += len(sent_list)
+			sent = list_of_sents[i+j]
+			sent = sent.strip()
+			sent_combined += sent
+			sent_list.append(sent.split(' '))
+        total += len(sent_list)
 	    num += 1
 	    all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
 	    all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
@@ -138,19 +138,20 @@ def get_sst():
 	    sent_combined = ""
 	    sent_list = []
 	    for j in range(sizeofsent):
-		sent = list_of_sents[i+j]
-		try:
-			num = int(sent.split('\t')[0])
-			sent = sent.split('\t')[1:]
-			sent = ' '.join(sent)
-		except:
-			pass
-		sent = sent.lower().strip()
-		sent_list.append(sent.split(' '))
+			sent = list_of_sents[i+j]
+			try:
+				num = int(sent.split('\t')[0])
+				sent = sent.split('\t')[1:]
+				sent = ' '.join(sent)
+			except:
+				pass
+			sent = sent.lower().strip()
+			sent_combined+=sent
+			sent_list.append(sent.split(' '))
 	    total += len(sent_list)
 	    num += 1
-	    all_pairs2 = template2(words2, sent, sent_list, all_pairs2)
-	    all_pairs3 = template3(words3, sent, sent_list, all_pairs3)
+	    all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
+	    all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
 	    print('list_of_sents[i]: ', list_of_sents[i])
 	    print('sent_combined: ', sent_combined)
 	    print('sent_list: ', sent_list)
