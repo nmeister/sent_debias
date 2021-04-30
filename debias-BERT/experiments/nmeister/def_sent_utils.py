@@ -113,7 +113,7 @@ def get_rest(filename, sizeofsent):
 	data = f.read()
 
 	list_of_sents = data.lower().split('\n')
-	for i, sent in enumerate(list_of_sents[:-(sizeofsent-1)):
+	for i, sent in enumerate(list_of_sents[:-(sizeofsent-1)]):
 		sent_combined = ""
 		sent_list = []
 		for j in range(sizeofsent):
@@ -134,7 +134,7 @@ def get_sst(sizeofsent):
 	total = 0
 	num = 0
 	list_of_sents = open(os.path.join(DIRECTORY,'sst.txt'), 'r')
-	for i, sent in enumerate(list_of_sents[:-(sizeofsent-1)):
+	for i, sent in enumerate(list_of_sents[:-(sizeofsent-1)]):
 		sent_combined = ""
 		sent_list = []
 		for j in range(sizeofsent):
