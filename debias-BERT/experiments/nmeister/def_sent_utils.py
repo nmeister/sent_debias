@@ -75,7 +75,7 @@ def template3(words, sent, sent_list, all_pairs):
 			all_pairs.append(pair)
 	return all_pairs
 
-def get_pom():
+def get_pom(sizeofsent):
 	all_pairs2 = defaultdict(lambda: defaultdict(list))
 	all_pairs3 = []
 	pom_loc = os.path.join(DIRECTORY, 'POM/')
@@ -114,50 +114,50 @@ def get_rest(filename, sizeofsent):
 
 	list_of_sents = data.lower().split('\n')
 	for i, sent in enumerate(list_of_sents):
-	    sent_combined = ""
-	    sent_list = []
-	    for j in range(sizeofsent):
-		sent = list_of_sents[i+j]
-		sent = sent.strip()
-		sent_combined += sent
-		sent_list.append(sent.split(' '))
-        total += len(sent_list)
-	num += 1
-	all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
-	all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
+		sent_combined = ""
+		sent_list = []
+		for j in range(sizeofsent):
+			sent = list_of_sents[i+j]
+			sent = sent.strip()
+			sent_combined += sent
+			sent_list.append(sent.split(' '))
+		total += len(sent_list)
+		num += 1
+		all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
+		all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
 
 	return all_pairs2, all_pairs3
 
-def get_sst():
+def get_sst(sizeofsent):
 	all_pairs2 = defaultdict(lambda: defaultdict(list))
 	all_pairs3 = []
 	total = 0
 	num = 0
 	list_of_sents = open(os.path.join(DIRECTORY,'sst.txt'), 'r')
 	for i, sent in enumerate(list_of_sents):
-	    sent_combined = ""
-	    sent_list = []
-	    for j in range(sizeofsent):
-		sent = list_of_sents[i+j]
-		try:
-			num = int(sent.split('\t')[0])
-			sent = sent.split('\t')[1:]
-			sent = ' '.join(sent)
-		except:
-			pass
-		sent = sent.lower().strip()
-		sent_combined+=sent
-		sent_list.append(sent.split(' '))
-	    total += len(sent_list)
-	    num += 1
-	    all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
-	    all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
-	    print('list_of_sents[i]: ', list_of_sents[i])
-	    print('sent_combined: ', sent_combined)
-	    print('sent_list: ', sent_list)
+		sent_combined = ""
+		sent_list = []
+		for j in range(sizeofsent):
+			sent = list_of_sents[i+j]
+			try:
+				num = int(sent.split('\t')[0])
+				sent = sent.split('\t')[1:]
+				sent = ' '.join(sent)
+			except:
+				pass
+			sent = sent.lower().strip()
+			sent_combined+=sent
+			sent_list.append(sent.split(' '))
+		total += len(sent_list)
+		num += 1
+		all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
+		all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
+		print('list_of_sents[i]: ', list_of_sents[i])
+		print('sent_combined: ', sent_combined)
+		print('sent_list: ', sent_list)
 	return all_pairs2, all_pairs3
 
-def get_more_domains():
+def get_more_domains(sizeofsent):
 	def sample(data, n_samples=1000):
 		n = len(data)
 		indices = np.random.choice(n, n_samples, replace=False)
@@ -169,7 +169,7 @@ def get_more_domains():
 
 	bucket_list = []
 	for i, domain in enumerate(domains):
-		domain_data = get_single_domain(domain)
+		domain_data = get_single_domain(domain, sizeofsent)
 		domain_data = sample(domain_data)
 		print(domain, len(domain_data))
 		if (i == 0): 
@@ -186,7 +186,7 @@ def get_more_domains():
 Collect n_samples templates from each source: reddit, sst, pom, wikitext
 Return a list where each element is a list of sentence pairs from one source.
 '''
-def get_all_domains(n_samples):
+def get_all_domains(n_samples, sizeofsent):
 	def sample(data):
 		n = len(data)
 		indices = np.random.choice(n, n_samples, replace=False)
@@ -196,23 +196,23 @@ def get_all_domains(n_samples):
 	bucket_list = []
 	domains = ["reddit", "sst", "pom", "wikitext"]
 	for i, domain in enumerate(domains):
-		domain_data = get_single_domain(domain)
+		domain_data = get_single_domain(domain, sizeofsent)
 		domain_data = sample(domain_data)
 		bucket_list.append(domain_data)
 
 	return bucket_list
 
-def old_get_more_domains():
+def old_get_more_domains(sizeofsent):
 	print("More domains")
-	b21, b31 = get_rest('news.txt')
+	b21, b31 = get_rest('news.txt', sizeofsent)
 	print ('news', len(b21), len(b31))
-	b22, b32 = get_rest('reddit.txt')
+	b22, b32 = get_rest('reddit.txt', sizeofsent)
 	print ('reddit', len(b22), len(b32))
-	b23, b33 = get_sst()
+	b23, b33 = get_sst(sizeofsent)
 	print ('sst', len(b23), len(b33))
-	b24, b34 = get_pom()
+	b24, b34 = get_pom(sizeofsent)
 	print ('pom', len(b24), len(b34))
-	b25, b35 = get_rest('wikitext.txt')
+	b25, b35 = get_rest('wikitext.txt', sizeofsent)
 	print ('wikitext', len(b25), len(b35))
 	
 	b22 += b21
@@ -238,9 +238,9 @@ def old_get_more_domains():
 	return bucket1, bucket2, bucket3, bucket4, bucket5
 
 
-def get_single_domain_in_buckets(domain="wikitext", buckets=5):
+def get_single_domain_in_buckets(domain="wikitext", buckets=5, sizeofsent=1):
 	print("Same domain with divided into buckets")
-	all_pairs_gender = get_single_domain(domain)
+	all_pairs_gender = get_single_domain(domain, sizeofsent)
 	
 	bucket_size = int(len(all_pairs_gender)/buckets)
 	bucket_list = []
@@ -249,9 +249,9 @@ def get_single_domain_in_buckets(domain="wikitext", buckets=5):
 
 	return bucket_list
 
-def get_same_domain_more_size(domain="wikitext"):
+def get_same_domain_more_size(domain="wikitext", sizeofsent=1):
 	print("Same domain with different sizes")
-	all_pairs2, all_pairs3 = get_single_domain(domain)
+	all_pairs2, all_pairs3 = get_single_domain(domain, sizeofsent)
 	print (domain, len(all_pairs2), len(all_pairs3))
 
 	buckets = 5
@@ -323,7 +323,7 @@ def get_def_pairs(def_pairs_name, sizeofsent):
 	elif (def_pairs_name.startswith(eqsize_prefix)):
 		n_samples = int(def_pairs_name[len(eqsize_prefix):])
 		print("Select {} templates from each source.".format(n_samples))
-		domain_list = get_all_domains(n_samples)
+		domain_list = get_all_domains(n_samples, sizeofsent)
 		def_pairs = []
 		for domain_data in domain_list: def_pairs.extend(domain_data)
 		return def_pairs
@@ -336,14 +336,14 @@ def get_def_pairs(def_pairs_name, sizeofsent):
 	# varying number of domains
 	elif (def_pairs_name.startswith("domain")):
 		num_domains = int(def_pairs_name[6:])
-		buckets = old_get_more_domains()
+		buckets = old_get_more_domains(sizeofsent)
 		bucket = buckets[num_domains-1][GENDER]
 		return bucket
 	# accumulating domains with same number of samples
 	elif (def_pairs_name.startswith("accdomain")):
 		start_idx = len("accdomain")
 		num_domains = int(def_pairs_name[start_idx:])
-		buckets = get_more_domains()
+		buckets = get_more_domains(sizeofsent)
 		bucket = buckets[num_domains-1]
 		return bucket
 	# single-domain
@@ -353,4 +353,4 @@ def get_def_pairs(def_pairs_name, sizeofsent):
 		raise Exception("invalid defining pairs name")
 
 if __name__ == '__main__':
-	data = get_all()
+	data = get_all(sizeofsent=1)
