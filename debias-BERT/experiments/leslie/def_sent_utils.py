@@ -45,6 +45,8 @@ def replace(a,new,L):
 
 # takes in sentence, changes all person names to 'he' or 'she' and returns the sentence
 def change_names(sent):
+        print('inside change_names')
+        print(sent)
 	doc = nlp(sent)
 	for ent in doc.ents:
 		if ent.label == 378:  # if it is label PERSON
@@ -56,7 +58,8 @@ def change_names(sent):
 				sent = sent.replace(a, 'John')  
 			elif x == 'female': 
 				sent = sent.replace(a, 'Mary')
-	return sent 
+	print(sent)
+        return sent 
 
 def template2(words, sent, sent_list, all_pairs):
 	sent = change_names(sent)
