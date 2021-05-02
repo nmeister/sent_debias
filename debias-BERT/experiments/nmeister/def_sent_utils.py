@@ -1,6 +1,7 @@
 # standard library
 from itertools import combinations
 import numpy as np
+import itertools
 import os, sys
 from collections import defaultdict
 
@@ -92,12 +93,9 @@ def get_pom(sizeofsent):
 				for j in range(sizeofsent):
 					sent = list_of_sents[i+j]
 					sent = sent.strip()
-					sent_combined += sent
+					sent_combined += ' ' + sent
 					sent_list.append(sent.split(' '))
-				print('list_of_sents[i]: ', list_of_sents[i])
-				print('sent_combined: ', sent_combined)
-				print('sent_list: ', sent_list)
-				total += len(sent_list)
+				sent_list = list(itertools.chain.from_iterable(sent_list))
 				num += 1
 				all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
 				all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
@@ -119,10 +117,9 @@ def get_rest(filename, sizeofsent):
 		for j in range(sizeofsent):
 			sent = list_of_sents[i+j]
 			sent = sent.strip()
-			sent_combined += sent
+			sent_combined += ' ' + sent
 			sent_list.append(sent.split(' '))
-		total += len(sent_list)
-		num += 1
+		sent_list = list(itertools.chain.from_iterable(sent_list))
 		all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
 		all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
 
@@ -133,7 +130,7 @@ def get_sst(sizeofsent):
 	all_pairs3 = []
 	total = 0
 	num = 0
-	list_of_sents = open(os.path.join(DIRECTORY,'sst.txt'), 'r')
+	list_of_sents = open(os.path.join(DIRECTORY,'sst.txt'), 'r').readlines()
 	for i, sent in enumerate(list_of_sents[:-(sizeofsent-1)]):
 		sent_combined = ""
 		sent_list = []
@@ -146,15 +143,12 @@ def get_sst(sizeofsent):
 			except:
 				pass
 			sent = sent.lower().strip()
-			sent_combined+=sent
+			sent_combined+=' ' + sent
 			sent_list.append(sent.split(' '))
-		total += len(sent_list)
+		sent_list = list(itertools.chain.from_iterable(sent_list))
 		num += 1
 		all_pairs2 = template2(words2, sent_combined, sent_list, all_pairs2)
 		all_pairs3 = template3(words3, sent_combined, sent_list, all_pairs3)
-		print('list_of_sents[i]: ', list_of_sents[i])
-		print('sent_combined: ', sent_combined)
-		print('sent_list: ', sent_list)
 	return all_pairs2, all_pairs3
 
 def get_more_domains(sizeofsent):
