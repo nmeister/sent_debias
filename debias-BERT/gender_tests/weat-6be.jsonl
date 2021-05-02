@@ -1,28 +1,28 @@
 {
   "targ1": {
-    "category": "MaleNames",
+    "category": "MaleTerms",
     "examples": [
-      "John",
-      "Paul",
-      "Mike",
-      "Kevin",
-      "Steve",
-      "Greg",
-      "Jeff",
-      "Bill"
+      "male",
+      "man",
+      "boy",
+      "brother",
+      "he",
+      "him",
+      "his",
+      "son"
     ]
   },
   "targ2": {
-    "category": "FemaleNames",
+    "category": "FemaleTerms",
     "examples": [
-      "Amy",
-      "Joan",
-      "Lisa",
-      "Sarah",
-      "Diana",
-      "Kate",
-      "Ann",
-      "Donna"
+      "female",
+      "woman",
+      "girl",
+      "sister",
+      "she",
+      "her",
+      "hers",
+      "daughter"
     ]
   },
   "attr1": {

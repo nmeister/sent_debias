@@ -1,0 +1,67 @@
+{
+  "targ1": {
+    "category": "Science",
+    "examples": [
+      "science",
+      "technology",
+      "physics",
+      "chemistry",
+      "Einstein",
+      "NASA",
+      "experiment",
+      "astronomy",
+      "physics",
+      "chemistry",
+      "biology",
+      "computer science"
+    ]
+  },
+  "targ2": {
+    "category": "Arts",
+    "examples": [
+      "poetry",
+      "art",
+      "dance",
+      "literature",
+      "novel",
+      "symphony",
+      "drama",
+      "sculpture",
+      "painting",
+      "poem",
+      "recital",
+      "ballerina",
+      "orchestra",
+      "artist",
+      "marching band",
+      "band",
+      "book"
+    ]
+  },
+  "attr1": {
+    "category": "MaleNames",
+    "examples": [
+      "John",
+      "Paul",
+      "Mike",
+      "Kevin",
+      "Steve",
+      "Greg",
+      "Jeff",
+      "Bill"
+    ]
+  },
+  "attr2": {
+    "category": "FemaleNames",
+    "examples": [
+      "Amy",
+      "Joan",
+      "Lisa",
+      "Sarah",
+      "Diana",
+      "Kate",
+      "Ann",
+      "Donna"
+    ]
+  }
+}
