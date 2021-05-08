@@ -68,7 +68,7 @@ def parse_args():
 	parser.add_argument("--encode_only", action='store_true')
 	parser.add_argument("--num_dimension", "-k", type=int, default=1,
 						help="dimensionality of bias subspace")
-    parser.add_argument("--sizeofsent", type=int, default=1)
+	parser.add_argument("--sizeofsent", type=int, default=1)
 
 	args = parser.parse_args()
 	if (args.output_name == None):
